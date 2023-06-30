@@ -22,7 +22,7 @@ class empleadoService{
         const client = new MongoClient(uri)
         try {
             await client.connect()
-            const empleado = client.db("construtech").collection("empleados").findOne({_id: new ObjectId(id)}).toArray()
+            const empleado = client.db("construtech").collection("empleados").findOne({_id: new ObjectId(id)})
             if(empleado){
                 return empleado                
             }

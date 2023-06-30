@@ -1,8 +1,10 @@
 const express = require('express');
 const {MongoClient, ObjectId}= require('mongodb');
-const bodyParser = require('body-parser');
+const empleadoService = require('../services/empleadoService')
+// const bodyParser = require('body-parser');
 const router = express.Router();
-const uri = "mongodb+srv://kevincastrillon31:admin123@clusterkevin.lmjqevf.mongodb.net/?retryWrites=true&w=majority";
+// const uri = "mongodb+srv://kevincastrillon31:admin123@clusterkevin.lmjqevf.mongodb.net/?retryWrites=true&w=majority";
+const service = new empleadoService
 
 //find all empleados
 router.get('/', async (req, res) =>{
@@ -24,27 +26,27 @@ router.get('/:id', async (req, res) =>{
     }
 })
 
-//insertOne Cliente
-router.post("/addCliente", async (req, res) =>{
+//insertOne Empleado
+router.post("/addEmpleado", async (req, res) =>{
     const result = await service.add(req.body)
     if (result) {
         res.status(200).json({
-            message:"Se agrego un Cliente en la base datos",result
+            message:"Se agrego un Empleado en la base datos",result
         })
     } else {
-        res.status(404).send("Error al insertar Cliente")
+        res.status(404).send("Error al insertar Empleado")
     }
 })
 
 //inserMany
-router.post("/addClientes", async (req, res) =>{
+router.post("/addEmpleados", async (req, res) =>{
     const result = await service.addMany(req.body)
     if (result) {
         res.status(200).json({
-            message:`Se agregaron Clientes en la base datos`
+            message:`Se agregaron Empleados en la base datos`
         })
     } else {
-        res.status(404).send("Error al intentar insertar Clientes")
+        res.status(404).send("Error al intentar insertar Empleados")
     }
 })
 
@@ -55,10 +57,10 @@ router.patch('/:id', async (req, res) =>{
     const result = await service.update(id,nombres,apellidos)
     if (result.modifiedCount > 0) {
         res.status(200).json({
-            message:`Se actualizo el empelado con el id:${id} en la base de datos`
+            message:`Se actualizo el empleado con el id:${id} en la base de datos`
         })
     } else {
-        res.status(404).send("Erorr al intentar actualizar empelado")
+        res.status(404).send("Erorr al intentar actualizar empleado")
     }
 })
 
@@ -85,10 +87,10 @@ router.delete('/:id', async (req, res) =>{
     const result = await service.delete(id)
     if (result.acknowledged == true && result.deletedCount > 0) {
         res.status(200).json({
-            message:`Se elimino el empleados con el id:${id} en la base de datos`
+            message:`Se elimino el empleado con el id:${id} en la base de datos`
         })
     } else {
-        res.status(404).send("Error al intentar eliminar empleados")
+        res.status(404).send("Error al intentar eliminar empleado")
     }
 })
 
